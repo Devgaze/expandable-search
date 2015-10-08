@@ -64,7 +64,7 @@ module.exports = function(grunt){
         imagesDir: '<%= App.devPath %>/images',
         javascriptsDir: '<%= App.devPath %>/scripts',
         fontsDir: '<%= App.devPath %>/fonts',
-        importPath: './vendor',
+        // importPath: './vendor',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/fonts',
@@ -104,10 +104,10 @@ module.exports = function(grunt){
             return [
 
               connect.static('.tmp'),
-              connect().use(
-                '/vendor',
-                connect.static('./vendor')
-              ),
+              // connect().use(
+              //   '/vendor',
+              //   connect.static('./vendor')
+              // ),
               connect().use(
                 '/src/sass',
                 connect.static('./src/sass')
@@ -127,11 +127,7 @@ module.exports = function(grunt){
             return [
               connect.static('.tmp'),
               connect.static('test'),
-              connect().use(
-                '/vendor',
-                connect.static('./vendor')
-              ),
-              connect.static(appConfig.app)
+              connect.static('<%= App.devPath %>')
             ];
           }
         }
@@ -192,13 +188,17 @@ module.exports = function(grunt){
       }
     },
 
+    // Test settings
+    karma: {
+      unit: {
+        configFile: 'test/karma.conf.js'//,
+        // singleRun: true
+      }
+    },
+
 
     // Watch - Run predefined tasks whenever watched file patterns are added, changed or deleted.
     watch: {
-      bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
-      },
       gruntfile: {
         files: 'Gruntfile.js',
         tasks: ['jshint:all'],
@@ -230,6 +230,33 @@ module.exports = function(grunt){
       }
     },
 
+    // Automatically inject Bower components into the app
+    // wiredep: {
+    //   app: {
+    //     src: ['<%= App.devPath %>/index.html'],
+    //     ignorePath:  /\.\.\//
+    //   },
+    //   test: {
+    //     devDependencies: true,
+    //     src: '<%= karma.unit.configFile %>',
+    //     ignorePath:  /\.\.\//,
+    //     fileTypes:{
+    //       js: {
+    //         block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+    //           detect: {
+    //             js: /'(.*\.js)'/gi
+    //           },
+    //           replace: {
+    //             js: '\'{{filePath}}\','
+    //           }
+    //         }
+    //       }
+    //   },
+    //   sass: {
+    //     src: ['<%= App.devPath %>/styles/{,*/}*.{scss,sass}'],
+    //     ignorePath: /(\.\.\/){1,2}bower_components\//
+    //   }
+    // },
     
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
@@ -262,35 +289,7 @@ module.exports = function(grunt){
           '<%= App.distPath %>/css'
         ]
       }
-    },
-
-    // Automatically inject Bower components into the app
-    wiredep: {
-      src: {
-        src: ['<%= App.devPath %>/index.html'],
-        ignorePath:  /\.\.\//
-      },
-      test: {
-        devDependencies: true,
-        src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
-        fileTypes:{
-          js: {
-            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
-            }
-          }
-      },
-      sass: {
-        src: ['<%= App.devPath %>/sass/{,*/}*.{scss,sass}'],
-        ignorePath: /(\.\.\/){1,2}vendor\//
-      }
-    } 
+    }
 
     // CSSMin - Minify CSS
     // cssmin: {
@@ -327,7 +326,7 @@ module.exports = function(grunt){
     //   }
     // }
 
-
+    
   });
 
   // Register development task called `serve`
@@ -339,7 +338,6 @@ module.exports = function(grunt){
 
     grunt.task.run([
       'clean:dev',
-      'wiredep',
       'autoprefixer:dev',
       'connect:livereload',
       'watch'
@@ -349,23 +347,21 @@ module.exports = function(grunt){
   // Register building task called `build`
   grunt.registerTask('build', [
     'clean:dist',
-    'wiredep',
     'useminPrepare',
     'autoprefixer',
     'concat',
-    // 'ngAnnotate',
     'copy:dist',
-    // 'cdnify',
     'cssmin',
     'uglify',
-    // 'filerev',
     'usemin'
     ]);
 
   // Register test task called `test`
-  grunt.registerTask('test', []);
-
-  // Register test task called `test`
-  grunt.registerTask('selftest', ['connect:livereload']);
+  grunt.registerTask('test', [
+      'clean:dev',
+      'autoprefixer',
+      'connect:test',
+      'karma'
+    ]);
 
 };

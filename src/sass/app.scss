@@ -1,0 +1,82 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,700,400);
+@font-face {
+  font-family: 'entypo';
+  src:url('fonts/entypo.eot?8lvrvh');
+  src:url('fonts/entypo.eot?8lvrvh#iefix') format('embedded-opentype'),
+    url('fonts/entypo.ttf?8lvrvh') format('truetype'),
+    url('fonts/entypo.woff?8lvrvh') format('woff'),
+    url('fonts/entypo.svg?8lvrvh#entypo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$icon-search: "\e800";
+$blue: rgba(50, 150, 255, 1);
+$light-grey: rgba(10,10,10,.1);
+$white: rgba(255,255,255,1);
+
+body 
+{
+  font-size: 1em;
+  font-family: 'Open Sans' sans-serif;
+  font-weight: 300;
+
+  #page-header
+  {
+    nav
+    {
+      float: left;
+    }
+    section
+    {
+      float: right;
+    }
+    &:after
+    {
+      content: " "; /* Older browser do not support empty content */
+      visibility: hidden;
+      display: block;
+      height: 0;
+      clear: both;
+    } 
+  }
+
+  #page-footer
+  {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: $light-grey;
+    p 
+    {
+      text-align: center;
+      font-size: .75em;
+    }
+  }
+
+  .icon {
+    font-family: 'entypo';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &.icon-search 
+    {
+      &:before
+      {
+        content: "\e800";
+      }
+    }
+
+  }
+
+
+}

@@ -47,19 +47,6 @@ var sb = ESB(searchBarFormElement);
 
 ```
 
-<html>
-<head>
-  ...
-</head>
-<body>
-  ...
-  <script type="text/javascript" src="js/esb.min.js"></script>
-  <!-- YOUR OTHER JAVASCRIPT FILES -->
-</body>
-</html>
-```
-
-
 <!-- Introduction - Summary - Installation - Downloads - FAQ - API explorer - Getting Started - Examples - Contributors -->
 
 

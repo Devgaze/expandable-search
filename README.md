@@ -43,7 +43,7 @@ Expandable search bar is an UI/UX pattern that helps to reduce visual overload o
 
 ```
 var searchBarFormElement = document.getElementById('searchBarForm');
-var sb = ESB(searchBarFormElement);
+var sb = new ESB(searchBarFormElement);
 
 ```
 

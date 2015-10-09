@@ -20,10 +20,10 @@
       </ul>
     </nav>
     <section id="search-bar">
-      <form role="search">
+      <form role="search" id="searchForm">
         <div>
-          <input type="text" name="search" id="search" placeholder="search your interest" />
-          <input type="submit" name="submit-search" id="submit-search" role="button" value="Search" class="icon icon-search"  /> 
+          <input type="text" name="query" placeholder="search your interest" class="search-query" />
+          <input type="submit" role="button" value="Search" class="icon icon-search search-btn"  /> 
         </div>
       </form>
     </section>  
@@ -52,6 +52,17 @@
   </footer>
   <!-- build:js({.tmp,src}) js/app.js -->
   <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript">
+
+    var esb, searchForm;
+    
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        esb = new ESB();
+      }
+    }
+    
+  </script>
   <!-- endbuild -->
 
 </body>

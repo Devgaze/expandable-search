@@ -20,7 +20,7 @@ Prepare your HTML
 
 Include CSS file `esb.min.css` inside of your `<head>` tag 
 
-```
+```html
 <head>
   ...
   <link rel="stylesheet" href="styles/esb.min.css" />
@@ -30,7 +30,7 @@ Include CSS file `esb.min.css` inside of your `<head>` tag
 
 And Javascript file `esb.min.js` at the end of your HTML 
 
-```
+```html
 <body>
   ...
   <script type="text/javascript" src="js/esb.min.js"></script>
@@ -41,7 +41,7 @@ And Javascript file `esb.min.js` at the end of your HTML
 
 Fetch the `FORM` element of search bar form, pass it as parameter to `ESB` class
 
-```
+```javascript
 var searchBarForm = document.getElementById('searchBarForm');
 var sb = new ESB(searchBarForm);
 

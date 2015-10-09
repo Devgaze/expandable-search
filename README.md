@@ -9,7 +9,7 @@ To start using the plugin copy/move `esb.min.js` to scripts folder and `esb.min.
 
 Prepare your HTML
 
-```
+```html
 <form id="searchBarForm" role="search">
   <div>
     <input type="text" name="search" placeholder="search..." class="searchTerm" />

@@ -5,9 +5,9 @@ Expandable search bar is an UI/UX pattern that helps to reduce visual overload o
 
 ## Getting Started
 
-1. To start using the plugin copy/move `esb.min.js` to scripts folder and `esb.min.css` to your styles folder
+To start using the plugin copy/move `esb.min.js` to scripts folder and `esb.min.css` to your styles folder.
 
-2. Prepare your HTML
+Prepare your HTML
 
 ```
 <form id="searchBarForm" role="search">
@@ -18,7 +18,7 @@ Expandable search bar is an UI/UX pattern that helps to reduce visual overload o
 </form>
 ```
 
-3. Include CSS file `esb.min.css` inside of your `<head>` tag 
+Include CSS file `esb.min.css` inside of your `<head>` tag 
 
 ```
 <head>
@@ -28,7 +28,7 @@ Expandable search bar is an UI/UX pattern that helps to reduce visual overload o
 </head>
 ```
 
-4. And Javascript file `esb.min.js` at the end of your HTML 
+And Javascript file `esb.min.js` at the end of your HTML 
 
 ```
 <body>
@@ -39,11 +39,11 @@ Expandable search bar is an UI/UX pattern that helps to reduce visual overload o
 </html>
 ```
 
-3. Fetch the `FORM` element of search bar form, pass it as parameter to `ESB` class
+Fetch the `FORM` element of search bar form, pass it as parameter to `ESB` class
 
 ```
-var searchBarFormElement = document.getElementById('searchBarForm');
-var sb = new ESB(searchBarFormElement);
+var searchBarForm = document.getElementById('searchBarForm');
+var sb = new ESB(searchBarForm);
 
 ```
 

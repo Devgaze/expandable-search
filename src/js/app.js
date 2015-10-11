@@ -20,9 +20,22 @@
    */
   function ESB (domForm) {
     
-    this.domForm = domForm || document.getElementById('searchForm');
+    try {
 
+      this.domForm = domForm || document.getElementById('searchForm');
+      
+      if (this.domForm === null)
+      {
+        throw new Error('You have to specify form to use this plugin or add/change your form ID to "searchForm"');
+      }
+
+    } catch (e) {
+      // gracefully report
+      console.error(e.message);
+    }
+    
   }
+
 
   window.ESB = ESB;
 

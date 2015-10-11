@@ -59,7 +59,8 @@
     
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
-        esb = new ESB();
+        searchForm = document.getElementById('search-form');
+        esb = new ESB(searchForm);
       }
     }
      

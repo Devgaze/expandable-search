@@ -1,18 +1,20 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,700,400);
 @font-face {
   font-family: 'entypo';
-  src:url('fonts/entypo.eot?8lvrvh');
-  src:url('fonts/entypo.eot?8lvrvh#iefix') format('embedded-opentype'),
-    url('fonts/entypo.ttf?8lvrvh') format('truetype'),
-    url('fonts/entypo.woff?8lvrvh') format('woff'),
-    url('fonts/entypo.svg?8lvrvh#entypo') format('svg');
+  src:url('../fonts/entypo.eot?8lvrvh');
+  src:url('../fonts/entypo.eot?8lvrvh#iefix') format('embedded-opentype'),
+    url('../fonts/entypo.ttf?8lvrvh') format('truetype'),
+    url('../fonts/entypo.woff?8lvrvh') format('woff'),
+    url('../fonts/entypo.svg?8lvrvh#entypo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 $icon-search: "\e800";
-$blue: rgba(50, 150, 255, 1);
-$light-grey: rgba(10,10,10,.1);
+$icon-menu: "\e120";
+
+$dark-grey: rgba(10, 10, 10, .6);
+$light-grey: rgba(10,10,10,.2);
 $white: rgba(255,255,255,1);
 
 body 
@@ -20,16 +22,103 @@ body
   font-size: 1em;
   font-family: 'Open Sans' sans-serif;
   font-weight: 300;
+  margin: 0; 
 
   #page-header
   {
-    nav
+    background-color: rgba(47,47,47,0.98);
+    padding: 1em;
+
+    nav#main-nav
     {
       float: left;
+      width: 42px;
+      position: relative;
+
+      button
+      {
+        background-color: $white;
+        width: 36px;
+        height: 36px;
+        border: 1px solid $light-grey;
+        border-radius: .5em;
+        outline: none;
+        text-align: center;
+        padding: 1em 0;
+        cursor: pointer;
+      }
+      
+      ul
+      {
+        display: block;
+        position: absolute;
+        width: 320px;
+        height: 100%;
+        top: 0;
+        left: -320px;
+        padding-left: 0;
+        margin-bottom: 0;
+
+        li 
+        {
+          a:link, a:visited
+          {
+            display: block;
+            padding: 0 1em;
+            color: white;
+          }
+        }
+      }
     }
-    section
+    section#search-bar
     {
       float: right;
+
+      form#search-form
+      {
+        div
+        {
+          border-radius: 36px;
+          border: 1px solid $light-grey;
+          overflow: hidden;
+          width: 34px;
+          height: 34px;
+          position: relative;
+
+          .search-query
+          {
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            border: none;
+            outline: none;
+            z-index: 10;
+            padding: .8em 2.5em 0 1em;
+            font-size: .8em;
+            color: $dark-grey;
+            font-style: oblique;
+          }
+
+          .search-btn
+          {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            border: none;
+            outline: none;
+            z-index: 20;
+            background-color: $white;
+            padding: 0;
+            text-align: center;
+            display: block;
+            font-size: .8em;
+            cursor: pointer;
+          }
+        }
+      }
     }
     &:after
     {
@@ -41,13 +130,18 @@ body
     } 
   }
 
+  article#main-content
+  {
+    padding: 1em;
+  }
+
   #page-footer
   {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: $light-grey;
+    border-top: 1px solid $light-grey;
     p 
     {
       text-align: center;
@@ -76,7 +170,97 @@ body
       }
     }
 
+    &.icon-menu 
+    {
+      &:before
+      {
+        content: "\e120";
+      }
+    }
+
   }
 
+}
+
+@media (min-width: 992px) {
+
+  body 
+  {
+
+    #page-header
+    {
+      // margin-top: 1em;
+
+      nav#main-nav
+      {
+        width: 50%;
+        
+        button
+        {
+          display: none;
+        }
+        
+        ul
+        {
+          position: relative;
+          left: 0;
+          display: block;
+          margin-top: .5em;
+          width: 100%;
+          height: auto;
+          text-align: justify;
+
+          &:after 
+          {
+            content: '';
+            width: 100%; 
+            display: inline-block;
+          }
+
+          li 
+          {
+            display: inline-block;  
+          }
+        }
+      }
+      section#search-bar
+      {
+        float: right;
+        width: 320px;
+
+        form#search-form
+        {
+          div
+          {
+            border-radius: 36px;
+            border: 1px solid $light-grey;
+            overflow: hidden;
+            width: 100%;
+            background-color: $white;
+            
+            .search-query
+            {
+              width: 284px;
+            }
+
+            .search-btn
+            {
+              // empty block for now
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@media (min-width: 1100px){
+
+  body 
+  {
+    width: 1100px;
+    margin: 0 auto;
+  }
 
 }

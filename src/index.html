@@ -12,24 +12,25 @@
 <body>
   <header id="page-header">
     <nav id="main-nav" role="navigation">
+      <button class="icon icon-menu" id="toggle-nav"></button>
       <ul>
-        <li><a hre="#" title="Home">Home</a></li>
-        <li><a hre="#" title="Products">Products</a></li>
-        <li><a hre="#" title="About">About</a></li>
-        <li><a hre="#" title="Contact">Contact</a></li>
+        <li><a href="#" title="Home">Home</a></li>
+        <li><a href="#" title="Products">Products</a></li>
+        <li><a href="#" title="About">About</a></li>
+        <li><a href="#" title="Contact">Contact</a></li>
       </ul>
     </nav>
     <section id="search-bar">
-      <form role="search" id="searchForm">
+      <form role="search" id="search-form">
         <div>
           <input type="text" name="query" placeholder="search your interest" class="search-query" />
-          <input type="submit" role="button" value="Search" class="icon icon-search search-btn"  /> 
+          <button onclick="javascript: submit();" class="search-btn icon icon-search"></button> 
         </div>
       </form>
     </section>  
   </header>
 
-  <article>
+  <article id="main-content">
     <header>
       <h1>Apple products</h1>
     </header>
@@ -61,7 +62,7 @@
         esb = new ESB();
       }
     }
-    
+     
   </script>
   <!-- endbuild -->
 

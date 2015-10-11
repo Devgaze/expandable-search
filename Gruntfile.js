@@ -214,10 +214,10 @@ module.exports = function(grunt){
         files: ['<%= App.devPath %>/sass/{,*/}*.{scss,sass}'],
         tasks: ['compass:dev', 'autoprefixer']
       },
-      // jsTest: {
-      //   files: ['test/jasmine/{,*/}*.js'],
-      //   tasks: ['newer:jshint:test', 'karma']
-      // },
+      jsTest: {
+        files: ['test/{,*/}*.js'],
+        tasks: ['newer:jshint:test', 'karma']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'

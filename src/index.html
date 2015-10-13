@@ -24,7 +24,7 @@
       <form role="search" id="search-form">
         <div>
           <input type="text" name="query" placeholder="search your interest" class="search-query" />
-          <button onclick="javascript: submit();" class="search-btn icon icon-search"></button> 
+          <button onclick="javascript: submit();" class="search-button icon icon-search"></button> 
         </div>
       </form>
     </section>  
@@ -55,13 +55,16 @@
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript">
 
-    var esb, searchForm;
+    var esb;
     
     document.onreadystatechange = function () {
+      
       if (document.readyState == "complete") {
-        searchForm = document.getElementById('search-form');
-        esb = new ESB(searchForm);
+    
+        esb = new ESB('search-form');
+    
       }
+    
     }
      
   </script>

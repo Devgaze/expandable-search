@@ -42,8 +42,7 @@ And Javascript file `esb.min.js` at the end of your HTML
 Fetch the `FORM` element of search bar form, pass it as parameter to `ESB` class
 
 ```javascript
-var searchBarForm = document.getElementById('searchBarForm');
-var sb = new ESB(searchBarForm);
+var sb = new ESB('search-form');
 
 ```
 

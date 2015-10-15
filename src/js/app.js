@@ -132,14 +132,12 @@
       return;
     
     } else {
-      debugger;
+      
       if (!this.events[el]) {
         this.events[el] = {};
       }
 
       this.events[el][evt] = callback;
-
-      console.log('here >>> ', this.events);
 
       if (el.addEventListener) {
 

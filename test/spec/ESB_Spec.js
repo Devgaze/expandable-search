@@ -1,11 +1,12 @@
 'use strict';
-describe('Expandable Search Bar (ESB) setup', function(){
+describe('Expandable Search Bar (ESB)', function(){
   
   // initialisation
-  var esb;
+  var esb, mockedESB;
   var wrapperElement;
 
   var formId  = 'search-form';
+
   var ERR     = {
     NO_FORM_EL:       'You have to specify form to use this plugin or add/change your form ID to "searchForm"',
     NO_CONTAINER_EL:  'Container element is missing! Please check example code for proper markup.',
@@ -19,12 +20,75 @@ describe('Expandable Search Bar (ESB) setup', function(){
   wrapperElement.setAttribute('id', 'wrapper');
   document.body.insertBefore(wrapperElement, document.body.childNodes[0]);
 
+  
+  // handle inheritance as spying on class itself interfere with other tests
+  var cloneClass = function (Original) {
+    var ClonedClass = function () {
+        ClonedClass.prototype.constructor.apply(this, arguments);
+    };
+    ClonedClass.prototype = Object.create(Original.prototype);
+    ClonedClass.prototype.constructor = Original;
+    return ClonedClass;
+  };
+
+
+  // POLYFILL for bind()
+  // 
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function(oThis) {
+      if (typeof this !== 'function') {
+        // closest thing possible to the ECMAScript 5
+        // internal IsCallable function
+        throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+      }
+
+      var aArgs   = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP    = function() {},
+          fBound  = function() {
+            return fToBind.apply(this instanceof fNOP
+                   ? this
+                   : oThis,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      if (this.prototype) {
+        // native functions don't have a prototype
+        fNOP.prototype = this.prototype; 
+      }
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+
+  // polyfill for event trigger
+  function triggerEvent(el, evt){
+    
+    var eventObj;
+    
+    if (document.createEvent) {
+    
+      eventObj = document.createEvent('MouseEvents');
+      eventObj.initEvent( evt, true, false );
+      el.dispatchEvent(eventObj);
+    
+    } else if (document.createEventObject) { 
+    
+      eventObj = document.createEventObject();
+      el.triggerEvent( 'on' + evt, eventObj );
+    
+    } 
+  
+  } 
 
   beforeEach(function(){
     
+    mockedESB = cloneClass(ESB);
+
     // set some spies
-    spyOn(window, 'ESB').and.callThrough();
     spyOn(console, 'error').and.callThrough();
+    
 
   });
 
@@ -38,6 +102,7 @@ describe('Expandable Search Bar (ESB) setup', function(){
       delete esb.searchButton;
 
       esb = null;
+      mockedESB = null;
 
     }
 
@@ -53,9 +118,10 @@ describe('Expandable Search Bar (ESB) setup', function(){
     it('should be initialised', function(){
       
       document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
-      expect(ESB).not.toHaveBeenCalled();
-      esb = new ESB(formId);
-      expect(ESB).toHaveBeenCalled();
+      spyOn(mockedESB.prototype, 'constructor').and.callThrough();
+      expect(mockedESB.prototype.constructor).not.toHaveBeenCalled();
+      esb = new mockedESB(formId);
+      expect(mockedESB.prototype.constructor).toHaveBeenCalled();
 
     });
 
@@ -137,16 +203,40 @@ describe('Expandable Search Bar (ESB) setup', function(){
       expect(console.error).toHaveBeenCalledWith(ERR.NO_BUTTON_EL);
 
     });
+
+    it('should initialise event listeners', function(){
+
+      document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
+      spyOn(mockedESB.prototype, '_addEventListener').and.callThrough();
+      expect(mockedESB.prototype._addEventListener).not.toHaveBeenCalled();
+      esb = new mockedESB(formId);
+      expect(esb._addEventListener).toHaveBeenCalled();
+
+    });
+
+    
     
   });
 
 
-  // Specs - operations
+  // Specs - implementation
   // 
-  describe('Operations', function(){
+  describe('Implementation', function(){
 
-    it('should listen events on `search-button` elements', function(){
-      expect(true).toBe(true);
+    it('should register click event on `search-button` element', function(){
+      
+      // // var esbconstr = spyOn(ESB.prototype, 'constructor')
+      document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
+      esb = new ESB(formId);
+      
+      expect(esb.container.className).toBe('');
+      expect(esb.searchExpanded).toBe(false);
+      
+      console.log(esb.events);
+      triggerEvent(esb.searchButton, 'click');
+      expect(esb.searchExpanded).toBe(true);
+      expect(esb.container.className).toBe('expanded');
+
     });
 
   });

@@ -20,6 +20,12 @@
    */
   function ESB (formElement) {
     
+    // used for toggling search form
+    this.searchExpanded = false;
+    
+    // used for event tracking
+    this.events = [];
+
     try {
 
       var formId = (formElement !== '') ? formElement : 'search-form';
@@ -58,8 +64,15 @@
       
       }
       
-      // if all elements are here - proceed
-      // this._initListeners();
+
+      // set `click` and `touchstart` listener on `searchButton` element
+      this._addEventListener(this.searchButton, 'click', this.toggleSearch);
+
+      // and for mobile devices
+      this._addEventListener(this.searchButton, 'touchstart', this.toggleSearch);
+
+
+
 
     } catch (e) {
       // gracefully report
@@ -67,6 +80,161 @@
     }
     
   }
+
+
+  /**
+   * Expand's the container element
+   * 
+   * @name expand
+   *
+   */
+  ESB.prototype.toggleSearch = function(ev){
+
+    // don't submit yet
+    ev.preventDefault();
+
+    if (this.searchExpanded === false){
+          
+      // animate container - expand
+      this._updateClassName('add', 'expanded', this.container);
+
+      // flag it as expanded
+      this.searchExpanded = true;
+
+    } else {
+
+      // animate container - collapse
+      this._updateClassName('remove', 'expanded', this.container);
+
+      // flag it as expanded
+      this.searchExpanded = false;
+
+      // ready to submit
+      // this.formElement.submit();
+
+    }
+    
+  };
+
+
+  /**
+   * Sets the event listener on element.
+   * 
+   * @name _addEventListener
+   * @param el {HTMLNode} element on which event listener is added
+   * @param evt {String} type of event to be listened
+   * @param callback {Function} a callback function
+   */
+  ESB.prototype._addEventListener = function(el, evt, callback){
+
+    if (this.events[el] && this.events[el][evt] === callback) {
+      
+      return;
+    
+    } else {
+      debugger;
+      if (!this.events[el]) {
+        this.events[el] = {};
+      }
+
+      this.events[el][evt] = callback;
+
+      console.log('here >>> ', this.events);
+
+      if (el.addEventListener) {
+
+        el.addEventListener(evt, callback.bind(this), false); 
+
+      } else if (el.attachEvent)  {
+
+        el.attachEvent(evt, callback.bind(this));
+
+      }
+
+    }
+    
+  };
+
+  /**
+   * Removes the event listener from element.
+   * 
+   * @name _removeEventListener
+   * @param el {HTMLNode} element on which event listener is added
+   * @param ev {String} type of event to be listened
+   * @param callback {Function} a callback function
+   */
+  ESB.prototype._removeEventListener = function(el, evt, callback){
+
+    if (this.events[el] && this.events[el][evt] === callback) {
+
+        this.events.pop(el);
+
+        if (el.removeEventListener) {
+
+          el.removeEventListener(evt, callback, false); 
+
+        } else if (el.attachEvent)  {
+
+          el.detachEvent(evt, callback);
+
+        }
+
+    } else {
+
+        return;
+        
+    }
+    
+  };
+
+  /**
+   * Helper function for adding/removing CSS classes.
+   * Read the function name and params as follows:
+   *
+   * @name _updateClassName
+   * @param action {String} a callback function
+   * @param val {String} type of event to be listened
+   * @param el {HTMLNode} element on which event listener is added
+   */
+  ESB.prototype._updateClassName = function(action, val, el){
+
+    var classNameArr = new Array();
+    
+    try {
+
+      classNameArr = el.className.split(' ');
+
+      if (action === 'add') {
+
+        // clear that empty element
+        if (classNameArr.length === 1 && classNameArr[0] === "") {
+
+          classNameArr.pop();
+
+        }
+
+        classNameArr.push(val);
+
+
+      } else if (action === 'remove') {
+
+        classNameArr.pop(val);
+      
+      } else {
+
+        throw new Error('You should set first param `action` to either `add` or `remove`. For details read the README.');
+
+      }
+      
+      el.className = (classNameArr.length === 1) ? classNameArr.join('') : classNameArr.join(' ');
+
+    } catch (e) {
+
+      console.error(e.message);
+
+    }
+    
+  };
 
   window.ESB = ESB;
 

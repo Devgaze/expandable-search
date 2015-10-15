@@ -12,8 +12,8 @@ Prepare your HTML
 ```html
 <form id="searchBarForm" role="search">
   <div>
-    <input type="text" name="search" placeholder="search..." class="searchTerm" />
-    <input type="submit" role="button" value="Search" class="searchBtn icon icon-search">
+    <input type="text" name="search" placeholder="search..." class="search-query" />
+    <input type="submit" role="button" value="Search" class="search-button icon icon-search">
   </div>
 </form>
 ```

@@ -216,7 +216,7 @@ module.exports = function(grunt){
       },
       jsTest: {
         files: ['test/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
+        tasks: ['jshint:test', 'karma']
       },
       livereload: {
         options: {

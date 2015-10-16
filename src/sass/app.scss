@@ -84,6 +84,12 @@ body
           width: 34px;
           height: 34px;
           position: relative;
+          transition: width 0.25s;
+
+          &.expanded
+          {
+            width: 220px;
+          }
 
           .search-query
           {
@@ -91,10 +97,11 @@ body
             left: 0;
             right: 0;
             width: 100%;
+            max-width: 171px;
             border: none;
             outline: none;
             z-index: 10;
-            padding: .8em 2.5em 0 1em;
+            padding: .8em 2.5em 1em 1em;
             font-size: .8em;
             color: $dark-grey;
             font-style: oblique;
@@ -105,9 +112,10 @@ body
             position: absolute;
             top: 0;
             right: 0;
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border: none;
+            border-radius: 36px;
             outline: none;
             z-index: 20;
             background-color: $white;
@@ -238,6 +246,11 @@ body
             width: 100%;
             background-color: $white;
             
+            &.expanded
+            {
+              width: 350px;
+            }
+
             .search-query
             {
               width: 284px;

@@ -51,7 +51,7 @@ module.exports = function(grunt){
           ]
         }]
       },
-      dev: '.tmp'
+      dev: '.tmp/'
     },
 
 
@@ -155,7 +155,6 @@ module.exports = function(grunt){
             '.htaccess',
             '*.html',
             'images/{,*/}*.{webp}',
-            'css/{,*/}*.*',
             'fonts/{,*/}*.*'
           ]
         }, {
@@ -269,7 +268,7 @@ module.exports = function(grunt){
           html: {
             steps: {
               js: ['concat', 'uglifyjs'],
-              css: ['cssmin', 'cssmin']
+              css: ['cssmin']
             },
             post: {}
           }
@@ -338,6 +337,7 @@ module.exports = function(grunt){
 
     grunt.task.run([
       'clean:dev',
+      'compass:dev',
       'autoprefixer:dev',
       'connect:livereload',
       'watch'
@@ -347,6 +347,7 @@ module.exports = function(grunt){
   // Register building task called `build`
   grunt.registerTask('build', [
     'clean:dist',
+    'compass:dist',
     'useminPrepare',
     'autoprefixer',
     'concat',

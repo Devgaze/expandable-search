@@ -166,6 +166,19 @@ module.exports = function(grunt){
       }
     },
 
+    
+    // Imagemin - minify images
+    imagemin: {  
+      dist: {    
+        files: [{
+          expand: true, 
+          cwd: '<%= App.devPath %>/images', 
+          src: ['**/*.{png,jpg,jpeg,gif}'], 
+          dest: '<%= App.distPath %>/images'
+        }]
+      }
+    },
+
 
     // JShint - Validate files with JSHint
     jshint: {
@@ -348,6 +361,7 @@ module.exports = function(grunt){
   grunt.registerTask('build', [
     'clean:dist',
     'compass:dist',
+    'imagemin:dist',
     'useminPrepare',
     'autoprefixer',
     'concat',

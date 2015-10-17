@@ -11,11 +11,14 @@
 }
 
 $icon-search: "\e800";
-$icon-menu: "\e120";
+$icon-menu:   "\e120";
 
-$dark-grey: rgba(10, 10, 10, .6);
-$light-grey: rgba(10,10,10,.2);
-$white: rgba(255,255,255,1);
+$white:       rgba(255,255,255,1);
+$dark-grey:   rgba(10, 10, 10, .6);
+$light-blue:  rgba(70, 165, 220, 1);
+$darker-blue: rgba(55, 150, 205, 1);
+$dark-blue:   rgba(40, 135, 190, 1);
+
 
 body 
 {
@@ -23,10 +26,12 @@ body
   font-family: 'Open Sans' sans-serif;
   font-weight: 300;
   margin: 0; 
+  background-color: $light-blue;
+  color: $white;
 
   #page-header
   {
-    background-color: rgba(47,47,47,0.98);
+    background-color: $darker-blue;
     padding: 1em;
 
     nav#main-nav
@@ -40,7 +45,7 @@ body
         background-color: $white;
         width: 36px;
         height: 36px;
-        border: 1px solid $light-grey;
+        border: none;
         border-radius: .5em;
         outline: none;
         text-align: center;
@@ -79,7 +84,7 @@ body
         div
         {
           border-radius: 36px;
-          border: 1px solid $light-grey;
+          border: none;
           overflow: hidden;
           width: 34px;
           height: 34px;
@@ -141,6 +146,27 @@ body
   article#main-content
   {
     padding: 1em;
+
+    .note
+    {
+      display: none;
+    }
+
+    blockquote
+    {
+      background: transparent url('../images/windrose.png') top center no-repeat;
+      font-family: cursive;
+      font-size: 1.3em;
+      max-width: 400px;
+      margin: 1em auto;
+      padding: 130px 0 0 0;
+
+      .small
+      {
+        font-size: .75em;
+      }
+    }
+
   }
 
   #page-footer
@@ -149,11 +175,12 @@ body
     right: 0;
     bottom: 0;
     left: 0;
-    border-top: 1px solid $light-grey;
+    border-top: 1px solid $darker-blue;
     p 
     {
       text-align: center;
       font-size: .75em;
+      color: $dark-blue;
     }
   }
 
@@ -190,6 +217,35 @@ body
 
 }
 
+@media (min-width: 640px) {
+
+  body 
+  {
+
+    article#main-content
+    {
+      blockquote
+      {
+        background-position: left center;
+        padding: 1em 0 1em 150px;
+
+        p:nth-child(1)
+        {
+          &:before 
+          {
+            content: "“ ";
+          }
+          &:after 
+          {
+            content: " ”";
+          }
+        }
+      }
+    }
+  }
+
+}
+
 @media (min-width: 992px) {
 
   body 
@@ -197,8 +253,6 @@ body
 
     #page-header
     {
-      // margin-top: 1em;
-
       nav#main-nav
       {
         width: 50%;
@@ -234,34 +288,41 @@ body
       section#search-bar
       {
         float: right;
-        width: 320px;
+        width: 400px;
 
         form#search-form
         {
           div
           {
             border-radius: 36px;
-            border: 1px solid $light-grey;
             overflow: hidden;
             width: 100%;
             background-color: $white;
             
             &.expanded
             {
-              width: 350px;
+              width: 100%;
             }
 
             .search-query
             {
               width: 284px;
             }
-
-            .search-btn
-            {
-              // empty block for now
-            }
           }
         }
+      }
+    }
+
+    article#main-content
+    {
+      .note
+      {
+        display: block;
+        background-color: $dark-blue;
+        color: $white;
+        padding: 1em;
+        font-size: .8em;
+        text-align: center;
       }
     }
   }
@@ -274,6 +335,32 @@ body
   {
     width: 1100px;
     margin: 0 auto;
+
+    #page-header
+    {
+
+      section#search-bar
+      {
+        width: 500px;
+
+        form#search-form
+        {
+          div
+          {
+            &.expanded
+            {
+              width: 300px;
+            }
+
+            .search-query
+            {
+              width: 284px;
+            }
+
+          }
+        }
+      }
+    }
   }
 
 }

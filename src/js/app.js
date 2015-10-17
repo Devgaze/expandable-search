@@ -104,8 +104,8 @@
       this.searchExpanded = true;
 
       // listen the body element
-      this._addEventListener(document.body, 'touchstart', this.close);
-      this._addEventListener(document.body, 'click', this.close);
+      this._addEventListener(document, 'touchstart', this.close);
+      this._addEventListener(document, 'click', this.close);
 
     } else {
 
@@ -116,8 +116,8 @@
       this.searchExpanded = false;
 
       // remove listener from body element
-      this._removeEventListener(document.body, 'touchstart', this.close);
-      this._removeEventListener(document.body, 'click', this.close);
+      this._removeEventListener(document, 'touchstart', this.close);
+      this._removeEventListener(document, 'click', this.close);
 
 
       // ready to submit

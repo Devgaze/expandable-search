@@ -342,23 +342,6 @@ body
       section#search-bar
       {
         width: 500px;
-
-        form#search-form
-        {
-          div
-          {
-            &.expanded
-            {
-              width: 300px;
-            }
-
-            .search-query
-            {
-              width: 284px;
-            }
-
-          }
-        }
       }
     }
   }

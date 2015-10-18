@@ -103,6 +103,9 @@
       // flag it as expanded
       this.searchExpanded = true;
 
+      // set focus to search-query
+      this.searchQuery.focus();
+
       // listen the body element
       this._addEventListener(document, 'touchstart', this.close);
       this._addEventListener(document, 'click', this.close);

@@ -112,6 +112,9 @@
 
     } else {
 
+      // remove focus before animation
+      this.searchQuery.focus();
+
       // animate container - collapse
       this._updateClassName('remove', 'expanded', this.container);
 

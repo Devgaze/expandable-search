@@ -107,26 +107,15 @@
       this.searchQuery.focus();
 
       // listen the body element
-      this._addEventListener(document, 'touchstart', this.close);
-      this._addEventListener(document, 'click', this.close);
+      this._addEventListener(document, 'touchstart', this.collapse);
+      this._addEventListener(document, 'click', this.collapse);
 
     } else {
 
-      // remove focus before animation
-      this.searchQuery.focus();
+      // collapse container
+      this.collapse(ev);
 
-      // animate container - collapse
-      this._updateClassName('remove', 'expanded', this.container);
-
-      // flag it as expanded
-      this.searchExpanded = false;
-
-      // remove listener from body element
-      this._removeEventListener(document, 'touchstart', this.close);
-      this._removeEventListener(document, 'click', this.close);
-
-
-      // ready to submit
+      // // ready to submit
       this.formElement.submit();
 
     }
@@ -140,12 +129,15 @@
    * @name close
    *
    */
-  ESB.prototype.close = function(ev){
+  ESB.prototype.collapse = function(ev){
     
     var target = ev.target || ev.srcElement;
 
     if (this.searchExpanded === true && target.className.indexOf('search-query') === -1 ) {
           
+      // remove focus before animation
+      this.searchQuery.blur();
+
       // animate container - collapse
       this._updateClassName('remove', 'expanded', this.container);
 
@@ -153,8 +145,8 @@
       this.searchExpanded = false;
 
       // remove listener from body element
-      this._removeEventListener(document.body, 'touchstart', this.close);
-      this._removeEventListener(document.body, 'click', this.close);
+      this._removeEventListener(document, 'touchstart', this.collapse);
+      this._removeEventListener(document, 'click', this.collapse);
 
       return true;
 

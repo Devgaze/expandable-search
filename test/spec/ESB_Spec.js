@@ -2,7 +2,7 @@
 describe('Expandable Search Bar (ESB)', function(){
   
   // initialisation
-  var esb, mockedESB;
+  var esb, MockedESB;
   var wrapperElement;
 
   var formId  = 'search-form';
@@ -44,21 +44,19 @@ describe('Expandable Search Bar (ESB)', function(){
 
       var aArgs   = Array.prototype.slice.call(arguments, 1),
           fToBind = this,
-          fNOP    = function() {},
-          fBound  = function() {
-            return fToBind.apply(this instanceof fNOP
-                   ? this
-                   : oThis,
+          FNOP    = function() {},
+          FBound  = function() {
+            return fToBind.apply(this instanceof FNOP ? this : oThis,
                    aArgs.concat(Array.prototype.slice.call(arguments)));
           };
 
       if (this.prototype) {
         // native functions don't have a prototype
-        fNOP.prototype = this.prototype; 
+        FNOP.prototype = this.prototype; 
       }
-      fBound.prototype = new fNOP();
+      FBound.prototype = new FNOP();
 
-      return fBound;
+      return FBound;
     };
   }
 
@@ -84,7 +82,7 @@ describe('Expandable Search Bar (ESB)', function(){
 
   beforeEach(function(){
     
-    mockedESB = cloneClass(ESB);
+    MockedESB = cloneClass(ESB);
 
     // set some spies
     spyOn(console, 'error').and.callThrough();
@@ -102,7 +100,7 @@ describe('Expandable Search Bar (ESB)', function(){
       delete esb.searchButton;
 
       esb = null;
-      mockedESB = null;
+      MockedESB = null;
 
     }
 
@@ -118,10 +116,10 @@ describe('Expandable Search Bar (ESB)', function(){
     it('should be initialised', function(){
       
       document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
-      spyOn(mockedESB.prototype, 'constructor').and.callThrough();
-      expect(mockedESB.prototype.constructor).not.toHaveBeenCalled();
-      esb = new mockedESB(formId);
-      expect(mockedESB.prototype.constructor).toHaveBeenCalled();
+      spyOn(MockedESB.prototype, 'constructor').and.callThrough();
+      expect(MockedESB.prototype.constructor).not.toHaveBeenCalled();
+      esb = new MockedESB(formId);
+      expect(MockedESB.prototype.constructor).toHaveBeenCalled();
 
     });
 
@@ -207,9 +205,9 @@ describe('Expandable Search Bar (ESB)', function(){
     it('should initialise event listeners', function(){
 
       document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
-      spyOn(mockedESB.prototype, '_addEventListener').and.callThrough();
-      expect(mockedESB.prototype._addEventListener).not.toHaveBeenCalled();
-      esb = new mockedESB(formId);
+      spyOn(MockedESB.prototype, '_addEventListener').and.callThrough();
+      expect(MockedESB.prototype._addEventListener).not.toHaveBeenCalled();
+      esb = new MockedESB(formId);
       expect(esb._addEventListener).toHaveBeenCalled();
 
     });
@@ -223,7 +221,7 @@ describe('Expandable Search Bar (ESB)', function(){
   // 
   describe('Implementation', function(){
 
-    it('should register click event on `search-button` element', function(){
+    it('should toggle `search-query` element while clicking on `search-button`', function(){
       
       // // var esbconstr = spyOn(ESB.prototype, 'constructor')
       document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
@@ -232,10 +230,33 @@ describe('Expandable Search Bar (ESB)', function(){
       expect(esb.container.className).toBe('');
       expect(esb.searchExpanded).toBe(false);
       
-      console.log(esb.events);
       triggerEvent(esb.searchButton, 'click');
       expect(esb.searchExpanded).toBe(true);
       expect(esb.container.className).toBe('expanded');
+
+      triggerEvent(esb.searchButton, 'click');
+      expect(esb.searchExpanded).toBe(false);
+      expect(esb.container.className).toBe('');
+
+    });
+
+    it('should collapse `search-query` element after click event on `document`', function(){
+      
+      // // var esbconstr = spyOn(ESB.prototype, 'constructor')
+      document.getElementById('wrapper').innerHTML = window.__html__['test/fixtures/completeMarkup.html'];
+      esb = new ESB(formId);
+      
+      expect(esb.container.className).toBe('');
+      expect(esb.searchExpanded).toBe(false);
+      
+      triggerEvent(esb.searchButton, 'click');
+      expect(esb.searchExpanded).toBe(true);
+      expect(esb.container.className).toBe('expanded');
+
+      triggerEvent(esb.doc, 'click');
+      
+      expect(esb.container.className).toBe('');
+      expect(esb.searchExpanded).toBe(false);
 
     });
 

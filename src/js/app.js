@@ -22,6 +22,8 @@
     
     // used for toggling search form
     this.searchExpanded = false;
+
+    this.doc = document;
     
     // used for event tracking
     this.events = [];
@@ -30,7 +32,7 @@
 
       var formId = (formElement !== '') ? formElement : 'search-form';
 
-      this.formElement = document.getElementById(formId);
+      this.formElement = this.doc.getElementById(formId);
       
       if (this.formElement === null) {
 
@@ -40,7 +42,7 @@
       
       // identify control container & controls
       // 
-      this.container = document.querySelector('form#' + formId + ' div');
+      this.container = this.doc.querySelector('form#' + formId + ' div');
       
       if (this.container === null) {
 
@@ -48,7 +50,7 @@
       
       }
 
-      this.searchQuery = document.querySelector('form#' + formId + ' .search-query');
+      this.searchQuery = this.doc.querySelector('form#' + formId + ' .search-query');
 
       if (this.searchQuery === null) {
 
@@ -56,7 +58,7 @@
       
       }
 
-      this.searchButton = document.querySelector('form#' + formId + ' .search-button');
+      this.searchButton = this.doc.querySelector('form#' + formId + ' .search-button');
       
       if (this.searchButton === null) {
 
@@ -107,8 +109,8 @@
       this.searchQuery.focus();
 
       // listen the body element
-      this._addEventListener(document, 'touchstart', this.collapse);
-      this._addEventListener(document, 'click', this.collapse);
+      this._addEventListener(this.doc, 'touchstart', this.collapse);
+      this._addEventListener(this.doc, 'click', this.collapse);
 
     } else {
 
@@ -132,8 +134,8 @@
   ESB.prototype.collapse = function(ev){
     
     var target = ev.target || ev.srcElement;
-
-    if (this.searchExpanded === true && target.className.indexOf('search-query') === -1 ) {
+    // console.log(this.searchQuery);
+    if (this.searchExpanded === true && (target.className === undefined || target.className.indexOf('search-query') === -1) ) {
           
       // remove focus before animation
       this.searchQuery.blur();
@@ -145,8 +147,8 @@
       this.searchExpanded = false;
 
       // remove listener from body element
-      this._removeEventListener(document, 'touchstart', this.collapse);
-      this._removeEventListener(document, 'click', this.collapse);
+      this._removeEventListener(this.doc, 'touchstart', this.collapse);
+      this._removeEventListener(this.doc, 'click', this.collapse);
 
       return true;
 
